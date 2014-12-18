@@ -12,7 +12,7 @@
 
 template<typename T> class Matrix {
 public:
-	Matrix	(int rows, int columns);
+	Matrix	(int, int);
 	~Matrix	();
 
 	T** mMatrixElements;
@@ -22,7 +22,7 @@ private:
 	//podria usar un virtual para almacenar los valores de la matriz?
 };	//Matrix
 
-#endif
+
 
 template<typename T> Matrix<T>::Matrix(int rows, int columns) {
 	_rows = rows;
@@ -32,15 +32,23 @@ template<typename T> Matrix<T>::Matrix(int rows, int columns) {
 	pAllocationError = new (nothrow) int;
 	*pAllocationError = 0;
 
-	mMatrixElements = new (nothrow) T** [_rows];
+	mMatrixElements = new (nothrow) T* [_rows];
 	for (int i = 0; i < _rows; i++){
-		*(mMatrixElements + i) = new (nothrow) T* [_columns];
+		*(mMatrixElements + i) = new (nothrow) T [_columns];
 		if (*(mMatrixElements) == NULL)
 			*pAllocationError += 1;
 	}
 	
-	if (mMatrixElements == 0 || *pAllocation != 0)
+	if (mMatrixElements == 0 || *pAllocationError != 0)
 		std::cout << "Allocation error. Couldn't create space for the matrix\n" << std::endl;
 
 	delete pAllocationError;
-}	//Matrix
+}	//Constructor
+
+
+
+template<typename T> Matrix<T>::~Matrix(){
+	delete mMatrixElements;
+}	//Destructor
+
+#endif	//_PFG_MATRIX_H_
