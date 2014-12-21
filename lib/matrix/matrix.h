@@ -65,6 +65,9 @@ template<typename T> bool Matrix<T>::operator ==(const T comparison) {
 	}
 	return true;
 }	//Operator ==
+
+
+
 template<typename T> void Matrix<T>::operator =(const T identity) {
 	for (int i = 0; i < _rows; i++) {
 		for (int j = 0; j < _columns; j++) {
