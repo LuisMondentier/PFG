@@ -12,14 +12,17 @@
 
 template<typename T> class Matrix {
 public:
-	Matrix	(int, int);
-	~Matrix	();
+	Matrix(int, int);
+	~Matrix();
+
+//Matrix - scalar operations
+	bool operator ==(const T identity);
+	void operator =(const T identity);
 
 	T** mMatrixElements;
 private:
 	int _rows;
 	int _columns;
-	//podria usar un virtual para almacenar los valores de la matriz?
 };	//Matrix
 
 
@@ -29,12 +32,12 @@ template<typename T> Matrix<T>::Matrix(int rows, int columns) {
 	_columns = columns;
 
 	int* pAllocationError;
-	pAllocationError = new (nothrow) int;
+	pAllocationError = new(nothrow) int;
 	*pAllocationError = 0;
 
 	mMatrixElements = new (nothrow) T* [_rows];
 	for (int i = 0; i < _rows; i++){
-		*(mMatrixElements + i) = new (nothrow) T [_columns];
+		*(mMatrixElements + i) = new(nothrow) T [_columns];
 		if (*(mMatrixElements) == NULL)
 			*pAllocationError += 1;
 	}
@@ -51,4 +54,22 @@ template<typename T> Matrix<T>::~Matrix(){
 	delete mMatrixElements;
 }	//Destructor
 
+
+
+template<typename T> bool Matrix<T>::operator ==(const T comparison) {
+	for (int i = 0; i < _rows; i++) {
+		for (int j = 0; j < _columns; j++) {
+			if (mMatrixElements[i][j] != comparison)
+				return mMatrixElements[i][j] == comparison;
+		}
+	}
+	return true;
+}	//Operator ==
+template<typename T> void Matrix<T>::operator =(const T identity) {
+	for (int i = 0; i < _rows; i++) {
+		for (int j = 0; j < _columns; j++) {
+			mMatrixElements[i][j] = identity;
+		}
+	}
+}	//Operator =
 #endif	//_PFG_MATRIX_H_

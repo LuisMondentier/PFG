@@ -12,7 +12,9 @@
 using namespace std;
 
 int main(void) {
-	Matrix <int> A(2, 2);
+	Matrix <int> A(2,2);
+	A = 1;
+	cout << A.mMatrixElements[1][1] << endl;
 	system("pause");
 	return 0;
 }	//main
