@@ -13,10 +13,11 @@ using namespace std;
 
 int main(void) {
 	Matrix <int> A(2,2);
-	A = 1;
-	cout << A.mMatrixElements[1][1] << endl;
-	if (A == 1) cout << "A es 1" << endl;
-	if (A == 2) cout << "A es 2" << endl;
+	Matrix <int> B(2,2);
+	A = 3;
+	B = A;
+	cout << B.mMatrixElements[1][1] << endl;
+	
 	system("pause");
 	return 0;
 }	//main

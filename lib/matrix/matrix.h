@@ -16,8 +16,12 @@ public:
 	~Matrix();
 
 //Matrix - scalar operations
-	bool operator ==(const T identity);
-	void operator =(const T identity);
+	bool operator ==(const T& identity);
+	void operator =(const T& identity);
+	Matrix<T> operator +(const T& summand);
+
+//Matrix - matrix operations
+	void operator =(const Matrix<T>& identity);
 
 	T** mMatrixElements;
 private:
@@ -56,7 +60,7 @@ template<typename T> Matrix<T>::~Matrix(){
 
 
 
-template<typename T> bool Matrix<T>::operator ==(const T comparison) {
+template<typename T> bool Matrix<T>::operator ==(const T& comparison) {
 	for (int i = 0; i < _rows; i++) {
 		for (int j = 0; j < _columns; j++) {
 			if (mMatrixElements[i][j] != comparison)
@@ -64,15 +68,39 @@ template<typename T> bool Matrix<T>::operator ==(const T comparison) {
 		}
 	}
 	return true;
-}	//Operator ==
+}	//Matrix - scalar overloaded operator "=="
 
 
 
-template<typename T> void Matrix<T>::operator =(const T identity) {
+template<typename T> void Matrix<T>::operator =(const T& identity) {
 	for (int i = 0; i < _rows; i++) {
 		for (int j = 0; j < _columns; j++) {
 			mMatrixElements[i][j] = identity;
 		}
 	}
-}	//Operator =
+}	//Matrix - scalar overloaded operator "="
+
+
+
+template<typename T> Matrix<T> Matrix<T>::operator +(const T& summand) {
+	Matrix<T> result(_rows, _columns);
+	for (int i = 0; i < _rows; i++) {
+		for (int j = 0; j < _columns; j++)
+			result.mMatrixElements[i][j] = mMatrixElements[i][j] + summand;			
+	}
+	return result;
+}	//Matrix - scalar overloaded operator "+"
+
+
+
+template<typename T> void Matrix<T>::operator =(const Matrix<T>& identity) {
+	if (_rows == identity._rows && _columns == identity._columns) {
+		for (int i = 0; i < _rows; i++) {
+			for (int j = 0; j < _columns; j++)
+				mMatrixElements[i][j] = identity.mMatrixElements[i][j];
+		}
+	}
+	else
+		cout << "Matrix error - size doesn't match" << endl;
+}	//Matrix - matrix overloaded operator "="
 #endif	//_PFG_MATRIX_H_
