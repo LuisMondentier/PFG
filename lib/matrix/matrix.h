@@ -18,9 +18,10 @@ public:
 //Matrix - scalar operations
 	bool operator ==(const T& identity);
 	void operator =(const T& identity);
-	Matrix<T> operator +(const T& summand);
+	Matrix<T> operator +(const T& summand);	//quiza devolver por referencia? quiza por ser const?
 
 //Matrix - matrix operations
+	bool operator ==(const Matrix<T>& identity);
 	void operator =(const Matrix<T>& identity);
 
 	T** mMatrixElements;
@@ -85,11 +86,25 @@ template<typename T> void Matrix<T>::operator =(const T& identity) {
 template<typename T> Matrix<T> Matrix<T>::operator +(const T& summand) {
 	Matrix<T> result(_rows, _columns);
 	for (int i = 0; i < _rows; i++) {
-		for (int j = 0; j < _columns; j++)
-			result.mMatrixElements[i][j] = mMatrixElements[i][j] + summand;			
+		for (int j = 0; j < _columns; j++) {
+			result.mMatrixElements[i][j] = mMatrixElements[i][j] + summand;
+		}			
 	}
-	return result;
+	std::cout << "Llego justo antes del return" << std::endl;
+	return (result);
 }	//Matrix - scalar overloaded operator "+"
+
+
+
+template<typename T> bool Matrix<T>::operator ==(const Matrix<T>& identity) {
+	for (int i = 0; i < _rows; i++) {
+		for (int j = 0; j < _columns; j++) {
+			if (mMatrixElements[i][j] != identity.mMatrixElements[i][j])
+				return mMatrixElements[i][j] == identity.mMatrixElements[i][j];
+		}
+	}
+	return true;
+}	//Matrix - matrix overloaded operator "=="
 
 
 
